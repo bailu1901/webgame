@@ -4,4 +4,4 @@ RootDir=`dirname $0`
 
 cd $RootDir
 
-nohup nodejs app.js >a.log 2>&1 & 
+nohup nodejs webgame.js >a.log 2>&1 & 
