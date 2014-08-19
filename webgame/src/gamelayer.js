@@ -2,6 +2,8 @@ var GameLayer = cc.Layer.extend(
 {
     snake:null,
     sprite:[],
+    controllayer:null,
+
     ctor:function () {
         //////////////////////////////
         // 1. super init first
@@ -40,7 +42,6 @@ var GameLayer = cc.Layer.extend(
             {
                 var temp = cc.Sprite.create(res.CloseNormal_png);
                 var p = utility.mapPos2ScreenPos(i,j);
-                //cc.log(p);
                 temp.attr(
                 {                
                    x: p.x,
@@ -54,6 +55,10 @@ var GameLayer = cc.Layer.extend(
             }                                   
         }
        
+        this.controllayer = new ControlLayer();
+        this.controllayer.gamelayer = this;
+        this.addChild(this.controllayer);
+
         this.schedule(this.update, 1 / 6);
 
         return true;
@@ -75,26 +80,64 @@ var GameLayer = cc.Layer.extend(
                 }
             }            
         }
-        this.sprite[5][6].visible = true;
-        this.sprite[5][6].x += 1;
+    },
 
-        this.test();
+    onControl:function (dir)
+    {
+        if(dir == Dir.Right)
+        {
+            this.snake.x += 50;
+        }
+        else if(dir == Dir.Left)
+        {
+            this.snake.x -= 50;
+        }
+        else if(dir == Dir.Up)
+        {
+            this.snake.y += 50;
+        }
+        else if(dir == Dir.Down)
+        {
+            this.snake.y -= 50;
+        }
     },
 
     onTouchMoved:function (touch, event) 
     {
-        //var target = event.getCurrentTarget();
+        var target = event.getCurrentTarget();
 
         //cc.assert(target._state == PADDLE_STATE_GRABBED, "Paddle - Unexpected state!");
 
         //var touchPoint = touch.getLocation();
         //touchPoint = cc.director.convertToGL( touchPoint );
+        var dir = Dir.None;
+        var deltaX = touch.getDelta().x;
+        var deltaY = touch.getDelta().y;
+        if( Math.abs(deltaX)>Math.abs(deltaY) )
+        {
+            if(deltaX>0)
+            {
+                dir = Dir.Right;
+            }
+            else if(deltaX<0)
+            {
+                dir = Dir.Left;
+            }
+        }
+        else
+        {
+            if(deltaY>0)
+            {
+                dir = Dir.Up;
+            }
+            else if(deltaY<0)
+            {
+                dir = Dir.Down;
+            }
+        }
         
-        //var delta = Math.abs(event.getDeltaX())>Math.abs(event.getDeltaY()) ? event.getDeltaX() : event.getDeltaY()
         
-        cc.log(this.snake);
-        //this.snake.x = 100;//this.snake.x+10;
-        //this.sprite[5][5].x = this.sprite[i][j].x+20;
+
     },
 
     onTouchBegan:function (touch, event) 

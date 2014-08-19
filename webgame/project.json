@@ -15,6 +15,7 @@
         "src/utility.js",
         "src/resource.js",
         "src/app.js",
+        "src/controllayer.js",
         "src/gamelayer.js"
     ]
 }
