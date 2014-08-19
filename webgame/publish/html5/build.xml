@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
-<project name="Javascript compress project" basedir="D:\Develop\webgame\html5" default="compile">
+<project name="Javascript compress project" basedir="E:\Develop\snake\html5" default="compile">
 
     <taskdef name="jscomp" classname="com.google.javascript.jscomp.ant.CompileTask"
-             classpath="D:\Develop\Cocos2d\cocos2d-js-v3.0-rc1\tools\cocos2d-console\bin\..\plugins\project_compile\build_web/bin/compiler-1.7.jar"/>
+             classpath="E:\Develop\cocos2d-js-v3.0-rc0\tools\cocos2d-console\bin\..\plugins\project_compile\build_web/bin/compiler-1.7.jar"/>
 
     <target name="compile">
         <jscomp compilationLevel="advanced" 
                 warning="quiet"
                 debug="false" 
-                output="D:\Develop\webgame\html5\publish\html5/game.min.js"
+                output="E:\Develop\snake\html5\publish\html5/game.min.js"
                 languagein="ECMASCRIPT5"
                 
                 >
-            <sources dir="D:\Develop\webgame\html5\frameworks\cocos2d-html5">
+            <sources dir="E:\Develop\snake\html5\frameworks\cocos2d-html5">
                 <file name="CCBoot.js"/>
                 <file name="CCDebugger.js"/>
                 <file name="cocos2d/core/utils/BinaryLoader.js"/>
@@ -140,8 +140,11 @@
 
             </sources>
             <sources dir="${basedir}">
+                <file name="src/gamedefine.js"/>
+                <file name="src/utility.js"/>
                 <file name="src/resource.js"/>
                 <file name="src/app.js"/>
+                <file name="src/gamelayer.js"/>
                 <file name="main.js"/>
 
             </sources>
