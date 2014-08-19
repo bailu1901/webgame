@@ -17,3 +17,10 @@ var g_TileSize =
     Height : g_Window.Height/g_Tile.Row
 };
 
+var Dir = 
+{
+    Up:0,  
+    Right:1,
+    Down:2,
+    Left:3
+};
