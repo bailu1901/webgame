@@ -9,18 +9,6 @@ var GameLayer = cc.Layer.extend(
         // 1. super init first
         this._super();
 
-        cc.eventManager.addListener({
-            event: cc.EventListener.TOUCH_ONE_BY_ONE,
-            swallowTouches: true,
-            onTouchBegan: this.onTouchBegan,
-            onTouchMoved: this.onTouchMoved,
-            onTouchEnded: this.onTouchEnded
-        }, this);
-
-        /////////////////////////////
-        // 2. add a menu item with "X" image, which is clicked to quit the program
-        //    you may modify it.
-        // ask director the window size
         var size = cc.director.getWinSize();
 
         this.snake = cc.Sprite.create(res.CloseNormal_png);
@@ -28,10 +16,10 @@ var GameLayer = cc.Layer.extend(
         this.snake.attr(
         {                
            x: pos.x,
-           y: pos.y
+           y: pos.y,
+           scale:2.0
         });
         this.addChild(this.snake, 0);
-
 
         this.sprite = [];
 
@@ -61,7 +49,40 @@ var GameLayer = cc.Layer.extend(
 
         this.schedule(this.update, 1 / 6);
 
+        this.setupUI();
+
         return true;
+    },
+
+    setupUI:function()
+    {
+        var size = cc.director.getWinSize();
+
+        var closeItem = cc.MenuItemImage.create(
+            res.CloseNormal_png,
+            res.CloseSelected_png,
+            function () {
+                cc.log("Menu is clicked!");
+
+                var pos = utility.mapPos2ScreenPos(Math.floor(g_Tile.Column/2), Math.floor(10/2));
+                this.snake.attr(
+                {                
+                   x: pos.x,
+                   y: pos.y
+                });
+
+            }, this);
+        closeItem.attr({
+            x: size.width - 20,
+            y: 20,
+            anchorX: 0.5,
+            anchorY: 0.5
+        });
+
+        var menu = cc.Menu.create(closeItem);
+        menu.x = 0;
+        menu.y = 0;
+        this.addChild(menu, 1);
     },
 
     update:function(dt)
@@ -102,59 +123,7 @@ var GameLayer = cc.Layer.extend(
         }
     },
 
-    onTouchMoved:function (touch, event) 
-    {
-        var target = event.getCurrentTarget();
 
-        //cc.assert(target._state == PADDLE_STATE_GRABBED, "Paddle - Unexpected state!");
-
-        //var touchPoint = touch.getLocation();
-        //touchPoint = cc.director.convertToGL( touchPoint );
-        var dir = Dir.None;
-        var deltaX = touch.getDelta().x;
-        var deltaY = touch.getDelta().y;
-        if( Math.abs(deltaX)>Math.abs(deltaY) )
-        {
-            if(deltaX>0)
-            {
-                dir = Dir.Right;
-            }
-            else if(deltaX<0)
-            {
-                dir = Dir.Left;
-            }
-        }
-        else
-        {
-            if(deltaY>0)
-            {
-                dir = Dir.Up;
-            }
-            else if(deltaY<0)
-            {
-                dir = Dir.Down;
-            }
-        }
-        
-        
-
-    },
-
-    onTouchBegan:function (touch, event) 
-    {
-        cc.log(this.snake);
-        return true;
-    },
-
-     onTouchEnded:function (touch, event) 
-     {
-
-    },
-
-    test:function()
-    {
-        cc.log(this);
-    }
 
 });
 
