@@ -32,14 +32,19 @@ var server = http.createServer(function (request, response)
 {
     var pathname = url.parse(request.url).pathname;
     mylog(pathname);
-    if("/"==pathname)
-    {
-      //pathname = path.join("index.html", pathname);
-	    pathname = "index.html";
+
+    if (path.extname(pathname)=="") 
+    {     
+      pathname+="/";
     }
 
-    var realPath = path.join("html5", pathname);
-    //console.log(realPath);
+    if (pathname.charAt(pathname.length-1)=="/")
+    { 
+      pathname+="index.html";
+    } 
+
+    var realPath = path.join("./html5", pathname);
+    //console.log("realPath  "+realPath);
 
     var ext = path.extname(realPath);
     ext = ext ? ext.slice(1) : 'unknown';
@@ -63,7 +68,9 @@ var server = http.createServer(function (request, response)
                     response.writeHead(500, {
                         'Content-Type': 'text/plain'
                     });
+                    mylog(err);
                     response.end(err);
+
                 } else {
                     var contentType = mine[ext] || "text/plain";
                     response.writeHead(200, {
