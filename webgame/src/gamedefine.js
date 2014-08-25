@@ -1,13 +1,13 @@
 var g_Window =
 {
-    Width : 320,
-    Height : 480
+    Width : 480,
+    Height : 800
 };
 
 var g_Tile =
 {
-    Row : 10,
-    Column : 10
+    Row : 12,
+    Column : 20
 };
 g_Tile.Total = g_Tile.Row*g_Tile.Column;
 

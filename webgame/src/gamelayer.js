@@ -3,6 +3,7 @@ var GameLayer = cc.Layer.extend(
     snake:null,
     sprite:[],
     controllayer:null,
+    map:null,
 
     ctor:function () {
         //////////////////////////////
@@ -36,13 +37,16 @@ var GameLayer = cc.Layer.extend(
                    y: p.y
                 });
 
-                this.addChild(temp, 0);
+                //this.addChild(temp, 0);
                 this.sprite[i][j] = temp;
                
                 
             }                                   
         }
        
+        this.map = new MapLayer();
+        this.addChild(this.map,-1);
+
         this.controllayer = new ControlLayer();
         this.controllayer.gamelayer = this;
         this.addChild(this.controllayer);
@@ -83,10 +87,16 @@ var GameLayer = cc.Layer.extend(
         menu.x = 0;
         menu.y = 0;
         this.addChild(menu, 1);
+
+    
+        //var map = cc.TMXTiledMap.create("res/1.tmx");
+        //this.addChild(this.map, 2);
     },
 
     update:function(dt)
     {
+        this.map.update();
+        /*
         for(var i=0; i<g_Tile.Column; i++)
         {
             for(var j=0; j<g_Tile.Row; j++)
@@ -101,6 +111,7 @@ var GameLayer = cc.Layer.extend(
                 }
             }            
         }
+        */
     },
 
     onControl:function (dir)

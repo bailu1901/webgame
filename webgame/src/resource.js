@@ -8,7 +8,7 @@ var g_resources = [
     //image
     res.HelloWorld_png,
     res.CloseNormal_png,
-    res.CloseSelected_png
+    res.CloseSelected_png,
 
     //plist
 
@@ -19,4 +19,5 @@ var g_resources = [
     //bgm
 
     //effect
+    "res/1.tmx"
 ];
