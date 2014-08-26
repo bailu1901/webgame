@@ -87,31 +87,11 @@ var GameLayer = cc.Layer.extend(
         menu.x = 0;
         menu.y = 0;
         this.addChild(menu, 1);
-
-    
-        //var map = cc.TMXTiledMap.create("res/1.tmx");
-        //this.addChild(this.map, 2);
     },
 
     update:function(dt)
     {
         this.map.update();
-        /*
-        for(var i=0; i<g_Tile.Column; i++)
-        {
-            for(var j=0; j<g_Tile.Row; j++)
-            {
-                if(Math.random(1,2)>0.5)
-                {
-                    this.sprite[i][j].visible = false;
-                }
-                else
-                {
-                    this.sprite[i][j].visible = false;
-                }
-            }            
-        }
-        */
     },
 
     onControl:function (dir)
