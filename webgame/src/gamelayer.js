@@ -1,6 +1,8 @@
+var WinSize = null;
+
 var GameLayer = cc.Layer.extend(
 {
-    snake:null,
+    player:null,
     controllayer:null,
     map:null,
 
@@ -9,17 +11,16 @@ var GameLayer = cc.Layer.extend(
         // 1. super init first
         this._super();
 
-        var size = cc.director.getWinSize();
+        WinSize = cc.director.getWinSize();
 
-        this.snake = cc.Sprite.create(res.CloseNormal_png);
+        this.player = new Player(res.CloseNormal_png);
         var pos = utility.mapPos2ScreenPos(Math.floor(g_Tile.Column/2), Math.floor(10/2));
-        this.snake.attr(
+        this.player.attr(
         {                
            x: pos.x,
-           y: pos.y,
-           scale:2.0
+           y: pos.y
         });
-        this.addChild(this.snake, 0);
+        this.addChild(this.player, 0);
        
         this.map = new MapLayer();
         this.addChild(this.map,-1);
@@ -44,13 +45,18 @@ var GameLayer = cc.Layer.extend(
             res.CloseSelected_png,
             function () {
                 cc.log("Menu is clicked!");
-
+                /*
                 var pos = utility.mapPos2ScreenPos(Math.floor(g_Tile.Column/2), Math.floor(10/2));
-                this.snake.attr(
+                this.player.attr(
                 {                
                    x: pos.x,
                    y: pos.y
                 });
+                */
+
+                this.map.removeAllMap();
+                this.map.generateMap();
+                this.schedule(this.update, 1 / 60);
 
             }, this);
         closeItem.attr({
@@ -69,25 +75,71 @@ var GameLayer = cc.Layer.extend(
     update:function(dt)
     {
         this.map.update();
+
+        var maps = this.map.maps;
+        for (var i = 0; i < maps.length; i++) 
+        {
+            var map = maps[i];
+            var layer = map.getLayer("object");
+            var TileNumX = map.getMapSize().width;
+            var TileNumY = map.getMapSize().height;
+            var TileSizeW = map.getTileSize().width;
+            var TileSizeH = map.getTileSize().height;
+
+            for (var j = 0; j < TileNumY; j++) 
+            {
+                var y = map.y+j*TileSizeH;
+                if(y>WinSize.height)
+                {
+                    break;
+                }
+
+                if(y+TileSizeH<0)
+                {
+                    continue;
+                }
+
+                for (var k = 0; k < TileNumX; k++) 
+                {
+                    var tile = layer.getTileAt(cc.p(k, j));
+                    if(null==tile)
+                    {
+                        continue;
+                    }
+
+                    var x = map.x+k*TileSizeW;
+
+                    var rc1 = cc.rect(x,y,TileSizeW,TileSizeH);
+                    var rc2 = this.player.collideRect();
+                    if(utility.collide(rc1,rc2))
+                    {
+                        this.unschedule(this.update);
+                        return;
+                    }
+                }
+            };
+        };
+
+        
     },
 
     onControl:function (dir)
     {
         if(dir == Dir.Right)
         {
-            this.snake.x += 50;
+            this.player.x += 50;
         }
         else if(dir == Dir.Left)
         {
-            this.snake.x -= 50;
+            this.player.x -= 50;
         }
         else if(dir == Dir.Up)
         {
-            this.snake.y += 50;
+            this.player.y += 50;
         }
         else if(dir == Dir.Down)
         {
-            this.snake.y -= 50;
+            this.player.y -= 50;
         }
     },
 

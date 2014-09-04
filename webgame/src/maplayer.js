@@ -88,7 +88,12 @@ var MapLayer = cc.Layer.extend(
             this.layer.removeChild(map);
             this.offset = 0;
         }
-    }
+    },
 
+    removeAllMap:function()
+    {
+        this.layer.removeAllChildren();
+        this.maps.length=0;
+    }
 });
 
