@@ -1,7 +1,6 @@
 var GameLayer = cc.Layer.extend(
 {
     snake:null,
-    sprite:[],
     controllayer:null,
     map:null,
 
@@ -21,28 +20,6 @@ var GameLayer = cc.Layer.extend(
            scale:2.0
         });
         this.addChild(this.snake, 0);
-
-        this.sprite = [];
-
-        for(var i=0; i<g_Tile.Column; i++)
-        {
-            this.sprite[i] = {};
-            for(var j=0; j<g_Tile.Row; j++)
-            {
-                var temp = cc.Sprite.create(res.CloseNormal_png);
-                var p = utility.mapPos2ScreenPos(i,j);
-                temp.attr(
-                {                
-                   x: p.x,
-                   y: p.y
-                });
-
-                //this.addChild(temp, 0);
-                this.sprite[i][j] = temp;
-               
-                
-            }                                   
-        }
        
         this.map = new MapLayer();
         this.addChild(this.map,-1);
@@ -51,7 +28,7 @@ var GameLayer = cc.Layer.extend(
         this.controllayer.gamelayer = this;
         this.addChild(this.controllayer);
 
-        this.schedule(this.update, 1 / 6);
+        this.schedule(this.update, 1 / 60);
 
         this.setupUI();
 

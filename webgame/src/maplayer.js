@@ -19,7 +19,7 @@ var MapLayer = cc.Layer.extend(
 
     update:function(dt)
     {
-        this.offset-=1;
+        this.offset-=5;
         this.moveMap();
         this.generateMap();
         this.recycleMap();
@@ -32,7 +32,7 @@ var MapLayer = cc.Layer.extend(
             var map=this.maps[i];
             if(0==i)
             {
-                var y =this.offset*map.getTileSize().height;
+                var y =this.offset;//*map.getTileSize().height;
                 map.setPosition(cc.p(0,y));
             }
             else

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="12" height="20" tilewidth="40" tileheight="40">
+<map version="1.0" orientation="orthogonal" width="12" height="40" tilewidth="40" tileheight="40">
  <tileset firstgid="1" name="CloseSelected" tilewidth="40" tileheight="40">
   <image source="CloseSelected.png" width="40" height="40"/>
  </tileset>
- <layer name="object" width="12" height="20">
+ <layer name="object" width="12" height="40">
   <data encoding="base64" compression="zlib">
-   eJxjZMANGHGIkYpJNZ9c95BiPinqyTEfGyDkHmLCDp/78dlJD/XExDs1xbHZRUoYYjOfFPWkmo/NLmLcjw8DAJvsAFg=
+   eJzVlNEOABAIRfn/n/baWm4dhvESdrpF0VttdGf9vMrPfCJexZjxKh8VX/lQnuRk7Qs+qg/lFUv4KM4Ov9JvSv9W/9B8Mp+oDhmv1i/56nmr2p779X+wuvRdZj439kk+XutET5D7tAyt7QCfVwBu
   </data>
  </layer>
 </map>
