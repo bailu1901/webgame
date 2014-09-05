@@ -86,6 +86,9 @@ var GameLayer = cc.Layer.extend(
             var TileSizeW = map.getTileSize().width;
             var TileSizeH = map.getTileSize().height;
 
+            var a = layer.getTiles();
+            var b = layer.getTileset();
+
             for (var j = 0; j < TileNumY; j++) 
             {
                 var y = map.y+j*TileSizeH;
@@ -101,8 +104,8 @@ var GameLayer = cc.Layer.extend(
 
                 for (var k = 0; k < TileNumX; k++) 
                 {
-                    var tile = layer.getTileAt(cc.p(k, TileNumY-(j+1)));
-                    if(null==tile)
+                    var tileGID = layer.getTileGIDAt(cc.p(k, TileNumY-(j+1)));
+                    if(0==tileGID)
                     {
                         continue;
                     }
