@@ -54,7 +54,7 @@ var GameLayer = cc.Layer.extend(
                 });
                 */
 
-                this.map.removeAllMap();
+                this.map.reset();
                 this.map.generateMap();
                 this.schedule(this.update, 1 / 60);
 
@@ -101,7 +101,7 @@ var GameLayer = cc.Layer.extend(
 
                 for (var k = 0; k < TileNumX; k++) 
                 {
-                    var tile = layer.getTileAt(cc.p(k, j));
+                    var tile = layer.getTileAt(cc.p(k, TileNumY-(j+1)));
                     if(null==tile)
                     {
                         continue;

@@ -90,8 +90,9 @@ var MapLayer = cc.Layer.extend(
         }
     },
 
-    removeAllMap:function()
+    reset:function()
     {
+        this.offset = 0;
         this.layer.removeAllChildren();
         this.maps.length=0;
     }
