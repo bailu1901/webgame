@@ -2,7 +2,7 @@ var MapLayer = cc.Layer.extend(
 {
     layer:null,
     maps:[],
-    velocity:cc.p(0,-150),
+    velocity:cc.p(-150,0),
 
     ctor:function ()
     {
@@ -30,6 +30,41 @@ var MapLayer = cc.Layer.extend(
     {
         var size = cc.director.getWinSize();
 
+        var top = 0, right = 0;
+        for(var i=0; i<this.maps.length; i++)
+        {
+            var map = this.maps[i];
+            var y = map.getPosition().y+map.getMapSize().height*map.getTileSize().height;
+            if(y>top)
+            {
+                top = y;
+            }
+
+            var x = map.getPosition().x+map.getMapSize().width*map.getTileSize().width;
+            if(x>right)
+            {
+                right = x;
+            }
+        }
+
+        if(top<=size.height)
+        {
+            var map = cc.TMXTiledMap.create("res/1.tmx");
+            map.setPosition( cc.p(0,top) );
+            this.maps.push(map);
+            this.layer.addChild(map);
+        }
+
+        if(right<=size.width)
+        {
+            var map = cc.TMXTiledMap.create("res/1.tmx");
+            map.setPosition( cc.p(right,0) );
+            this.maps.push(map);
+            this.layer.addChild(map);
+        }
+
+        /*
+       
         do
         {
             var top = 0;
@@ -52,6 +87,7 @@ var MapLayer = cc.Layer.extend(
             }
         }
         while(true);
+        */
     },
 
     recycleMap:function()
@@ -61,13 +97,20 @@ var MapLayer = cc.Layer.extend(
         {
             var map = this.maps[i];
             var top = map.getPosition().y+map.getMapSize().height*map.getTileSize().height;
-            var right = map.getPosition().x+map.getMapSize().width*map.getTileSize().width;
-            if(top<0 || right<0)
+            if(top>=0)
             {
-                this.layer.removeChild(map);
-                this.maps.splice(i,1);
-                i--;
-            }          
+                continue;
+            }
+
+            var right = map.getPosition().x+map.getMapSize().width*map.getTileSize().width;
+            if(right>=0)
+            {
+                continue;
+            }
+
+            this.layer.removeChild(map);
+            this.maps.splice(i,1);
+            i--;        
         }      
     },
 
