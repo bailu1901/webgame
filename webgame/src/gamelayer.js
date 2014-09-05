@@ -14,14 +14,8 @@ var GameLayer = cc.Layer.extend(
         WinSize = cc.director.getWinSize();
 
         this.player = new Player(res.CloseNormal_png);
-        var pos = utility.mapPos2ScreenPos(Math.floor(g_Tile.Column/2), Math.floor(10/2));
-        this.player.attr(
-        {                
-           x: pos.x,
-           y: pos.y
-        });
         this.addChild(this.player, 0);
-       
+
         this.map = new MapLayer();
         this.addChild(this.map,-1);
 
@@ -29,9 +23,11 @@ var GameLayer = cc.Layer.extend(
         this.controllayer.gamelayer = this;
         this.addChild(this.controllayer);
 
-        this.schedule(this.update, 1 / 60);
+        
 
         this.setupUI();
+
+        this.startGame();
 
         return true;
     },
@@ -54,9 +50,8 @@ var GameLayer = cc.Layer.extend(
                 });
                 */
 
-                this.map.reset();
-                this.map.generateMap();
-                this.schedule(this.update, 1 / 60);
+                this.startGame();
+
 
             }, this);
         closeItem.attr({
@@ -74,7 +69,7 @@ var GameLayer = cc.Layer.extend(
 
     update:function(dt)
     {
-        this.map.update();
+        this.map.update(dt);
 
         var maps = this.map.maps;
         for (var i = 0; i < maps.length; i++) 
@@ -146,7 +141,21 @@ var GameLayer = cc.Layer.extend(
         }
     },
 
-
+    startGame:function()
+    {
+        //var group = map.getObjectGroup("Object Group 1");
+        //var array = group.getObjects();
+        //var dict;
+        
+        this.player.attr(
+        {                
+           x: 300,
+           y: 200
+        });
+        this.schedule(this.update, 1 / 60);
+        this.map.reset();
+        this.map.generateMap();
+    }
 
 });
 

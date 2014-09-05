@@ -2,47 +2,28 @@ var MapLayer = cc.Layer.extend(
 {
     layer:null,
     maps:[],
-    offset:0,
+    velocity:cc.p(0,-150),
 
     ctor:function ()
     {
-
         this._super();
 
         this.layer = cc.Layer.create()
         this.addChild(this.layer);
-
-        this.generateMap();
 
         return true;
     },
 
     update:function(dt)
     {
-        this.offset-=5;
-        this.moveMap();
-        this.generateMap();
-        this.recycleMap();
-    },
-    
-    moveMap:function()
-    {
         for(var i=0; i<this.maps.length; i++)
         {
             var map=this.maps[i];
-            if(0==i)
-            {
-                var y =this.offset;//*map.getTileSize().height;
-                map.setPosition(cc.p(0,y));
-            }
-            else
-            {
-                var preMap=this.maps[i-1];
-                var y = preMap.getPosition().y+preMap.getMapSize().height*preMap.getTileSize().height;
-                map.setPosition(cc.p(0,y));
-            }
-            
+            map.x+=this.velocity.x*dt;
+            map.y+=this.velocity.y*dt;
         }
+        this.recycleMap();
+        this.generateMap();  
     },
 
     generateMap:function()
@@ -76,23 +57,22 @@ var MapLayer = cc.Layer.extend(
     recycleMap:function()
     {
         //var size = cc.director.getWinSize();
-        var map = this.maps[0];
-        var top = map.getPosition().y+map.getMapSize().height*map.getTileSize().height;
-        if( top<=0 )
+        for(var i=0; i<this.maps.length; i++)
         {
-            for(var i=1; i<this.maps.length; i++)
+            var map = this.maps[i];
+            var top = map.getPosition().y+map.getMapSize().height*map.getTileSize().height;
+            var right = map.getPosition().x+map.getMapSize().width*map.getTileSize().width;
+            if(top<0 || right<0)
             {
-                this.maps[i-1]=this.maps[i];
-            }
-            this.maps.length-=1;
-            this.layer.removeChild(map);
-            this.offset = 0;
-        }
+                this.layer.removeChild(map);
+                this.maps.splice(i,1);
+                i--;
+            }          
+        }      
     },
 
     reset:function()
     {
-        this.offset = 0;
         this.layer.removeAllChildren();
         this.maps.length=0;
     }
