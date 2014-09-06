@@ -2,7 +2,7 @@ var MapLayer = cc.Layer.extend(
 {
     layer:null,
     maps:[],
-    velocity:cc.p(-150,0),
+    velocity:cc.p(0,-150),
 
     ctor:function ()
     {
@@ -52,7 +52,7 @@ var MapLayer = cc.Layer.extend(
             var map = null;
             if(top<size.height)
             {
-                map = cc.TMXTiledMap.create("res/2.tmx");
+                map = cc.TMXTiledMap.create("res/1.tmx");
                 map.setPosition( cc.p(0,top) );
 
                 top+=map.getMapSize().height*map.getTileSize().height;;

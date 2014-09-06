@@ -5,6 +5,7 @@ var GameLayer = cc.Layer.extend(
     player:null,
     controllayer:null,
     map:null,
+    dir:Dir.None,
 
     ctor:function () {
         //////////////////////////////
@@ -19,11 +20,8 @@ var GameLayer = cc.Layer.extend(
         this.map = new MapLayer();
         this.addChild(this.map,-1);
 
-        this.controllayer = new ControlLayer();
-        this.controllayer.gamelayer = this;
+        this.controllayer = new ControlLayer(this);
         this.addChild(this.controllayer);
-
-        
 
         this.setupUI();
 
@@ -41,19 +39,9 @@ var GameLayer = cc.Layer.extend(
             res.CloseSelected_png,
             function () {
                 cc.log("Menu is clicked!");
-                /*
-                var pos = utility.mapPos2ScreenPos(Math.floor(g_Tile.Column/2), Math.floor(10/2));
-                this.player.attr(
-                {                
-                   x: pos.x,
-                   y: pos.y
-                });
-                */
-
                 this.startGame();
-
-
             }, this);
+
         closeItem.attr({
             x: size.width - 20,
             y: 20,
@@ -69,6 +57,21 @@ var GameLayer = cc.Layer.extend(
 
     update:function(dt)
     {
+        if(this.dir == Dir.Right)
+        {
+            this.player.setAcceleration(cc.p(5000,0));
+        }
+        else if(this.dir == Dir.Left)
+        {
+            this.player.setAcceleration(cc.p(-5000,0));
+        }
+        else
+        {
+            this.player.setAcceleration(cc.p(0,0));
+        }
+
+        this.player.update(dt);
+
         this.map.update(dt);
 
         var maps = this.map.maps;
@@ -79,7 +82,7 @@ var GameLayer = cc.Layer.extend(
             var TileNumY = map.getMapSize().height;
             var TileSizeW = map.getTileSize().width;
             var TileSizeH = map.getTileSize().height;
-         
+         /*
             var group = map.getObjectGroup("Object Layer 1");
             var array = group.getObjects();
             var dict;
@@ -87,7 +90,8 @@ var GameLayer = cc.Layer.extend(
             {
                 dict = array[d];
             }
-
+        
+        */
             var layers = map.allLayers();
 
             for (var l=0; l<layers.length; l++)
@@ -119,7 +123,7 @@ var GameLayer = cc.Layer.extend(
                         var x = map.x+k*TileSizeW;
 
                         var rc1 = cc.rect(x,y,tileSize.width,tileSize.height);
-                        var rc2 = this.player.collideRect();
+                        var rc2 = this.player.getCollideRect();
                         if(utility.collide(rc1,rc2))
                         {
                             this.unschedule(this.update);
@@ -135,38 +139,22 @@ var GameLayer = cc.Layer.extend(
 
     onControl:function (dir)
     {
-        if(dir == Dir.Right)
-        {
-            this.player.x += 50;
-        }
-        else if(dir == Dir.Left)
-        {
-            this.player.x -= 50;
-        }
-        else if(dir == Dir.Up)
-        {
-            this.player.y += 50;
-        }
-        else if(dir == Dir.Down)
-        {
-            this.player.y -= 50;
-        }
+        this.dir = dir;
     },
 
     startGame:function()
-    {
-        //var group = map.getObjectGroup("Object Group 1");
-        //var array = group.getObjects();
-        //var dict;
-        
+    {       
+        this.player.reset(); 
         this.player.attr(
         {                
-           x: 300,
-           y: 200
+           x: 270,
+           y: 50
         });
-        this.schedule(this.update, 1 / 60);
+        
         this.map.reset();
         this.map.generateMap();
+
+        this.schedule(this.update, 1 / 60);
     }
 
 });

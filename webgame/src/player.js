@@ -1,48 +1,72 @@
+var maxVelocity = 200;
+var decrease = 10;
+
 var Player = cc.Sprite.extend(
 {
-    velocity:cc.p(0,1),
+    acceleration:cc.p(0,0),
+    velocity:cc.p(0,0),
+    collideRect:cc.rect(0,0,0,0),
 
     ctor:function (res) {
 
         this._super(res);
+        this.reset();
 
         return true;
     },
 
     update:function(dt)
     {
-        var pt = cc.p(this.velocity.x*dt,this.velocity.y*dt);
-        this.setPosition(this.getPosition()+pt);
-    },
 
-    collideRect:function()
-    {
+
+        this.velocity.x+=this.acceleration.x*dt;
+        this.velocity.x = Math.min(this.velocity.x,maxVelocity);
+        this.velocity.x = Math.max(this.velocity.x,-maxVelocity);
+        //this.velocity.y+=this.acceleration.y*dt;
+
+        this.x+=this.velocity.x*dt;
+        this.y+=this.velocity.y*dt;
+
+        this.acceleration.x = 0;
+
+        if(this.velocity.x>0)
+        {
+            this.velocity.x-=decrease;
+            if(this.velocity.x<0)
+            {
+                this.velocity.x = 0;
+            }
+        }
+        else if(this.velocity.x<0)
+        {
+            this.velocity.x+=decrease;
+            if(this.velocity.x>0)
+            {
+                this.velocity.x = 0;
+            }
+        }
+
         var w = this.width, h = this.height;
-        return cc.rect(this.x - w / 2, this.y - h / 2, w, h / 2);
+        this.collideRect = cc.rect(this.x - w / 2, this.y - h / 2, w, h / 2); 
     },
 
-    onControl:function (dir)
+    getCollideRect:function()
     {
-        /*
-        if(dir == Dir.Right)
-        {
-            this.snake.x += 50;
-        }
-        else if(dir == Dir.Left)
-        {
-            this.snake.x -= 50;
-        }
-        else if(dir == Dir.Up)
-        {
-            this.snake.y += 50;
-        }
-        else if(dir == Dir.Down)
-        {
-            this.snake.y -= 50;
-        }
-        */
+        return this.collideRect;
     },
 
+    setAcceleration:function (acc)
+    {     
+        this.acceleration = acc;
+    },
+
+    reset:function()
+    {
+        this.acceleration.x = 0;
+        this.acceleration.y = 0;
+        this.velocity.x = 0;
+        this.velocity.y = 0;
+    }
 
 
 });

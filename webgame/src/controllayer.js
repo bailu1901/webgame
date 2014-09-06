@@ -3,8 +3,9 @@ var ControlLayer = cc.Layer.extend(
     process:true,
     gamelayer:null,
     label:null,
+    dir:Dir.None,
 
-    ctor:function () {
+    ctor:function (gamelayer) {
         //////////////////////////////
         // 1. super init first
         this._super();
@@ -17,6 +18,8 @@ var ControlLayer = cc.Layer.extend(
             onTouchEnded: this.onTouchEnded
         }, this);
 
+        this.gamelayer = gamelayer;
+
         this.label = cc.LabelTTF.create();
         this.label.x = 200;
         this.label.y = 300;
@@ -27,13 +30,26 @@ var ControlLayer = cc.Layer.extend(
 
     onTouchBegan:function (touch, event) 
     {
+        var target = event.getCurrentTarget();
+
+        var p = touch.getLocation();
+        var size = cc.director.getWinSize();
+        if(p.x<size.width/2)
+        {
+            target.gamelayer.onControl(Dir.Left);
+        }
+        else if(p.x>size.width/2)
+        {
+            target.gamelayer.onControl(Dir.Right);
+        }
+
         return true;
     },
 
     onTouchMoved:function (touch, event) 
     {
         var target = event.getCurrentTarget();
-
+        /*
         if(!target.process)
         {
             return;
@@ -86,12 +102,16 @@ var ControlLayer = cc.Layer.extend(
             }
         }
         target.label.setString("x:"+delta.x+"   y:"+delta.y);
+        
         target.gamelayer.onControl(dir);
+        */
     },
 
     onTouchEnded:function (touch, event) 
     {
         var target = event.getCurrentTarget();
-        target.process = true;
+        //target.process = true;
+        //target.dir = Dir.None;
+        target.gamelayer.onControl(Dir.None);
     }
 });
