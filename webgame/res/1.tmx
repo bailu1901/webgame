@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="12" height="40" tilewidth="40" tileheight="40">
- <tileset firstgid="1" name="CloseSelected" tilewidth="40" tileheight="40">
+ <tileset firstgid="1" name="HelloWorld" tilewidth="40" tileheight="40">
+  <image source="HelloWorld.png" width="800" height="450"/>
+ </tileset>
+ <tileset firstgid="221" name="CloseSelected" tilewidth="40" tileheight="40">
   <image source="CloseSelected.png" width="40" height="40"/>
  </tileset>
- <layer name="object" width="12" height="40">
+ <layer name="object" width="12" height="40" visible="0">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFo2AUjIJRMApGAa0AIw5xAAeYAAI=
+   eJxjYKAc3B3i6ulhx3Bw00hSf5dI9cSou0ukOmT1pIDhkBYp0UNK2I6CUTCYAADrhhrE
   </data>
  </layer>
+ <layer name="Tile Layer 2" width="12" height="40">
+  <data encoding="base64" compression="zlib">
+   eJxzYSAeuOAQNyTBjJGi3hAHe1T98FCPS+8oGAWjYOQCXHUkLrUA21wGPA==
+  </data>
+ </layer>
+ <objectgroup name="player" width="12" height="40" visible="0">
+  <object name="born" x="240" y="1360" width="40" height="80"/>
+ </objectgroup>
 </map>

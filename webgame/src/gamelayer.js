@@ -75,6 +75,7 @@ var GameLayer = cc.Layer.extend(
         for (var i = 0; i < maps.length; i++) 
         {
             var map = maps[i];
+            allLayers();
             var layer = map.getLayer("object");
             var TileNumX = map.getMapSize().width;
             var TileNumY = map.getMapSize().height;

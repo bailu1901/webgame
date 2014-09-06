@@ -47,47 +47,43 @@ var MapLayer = cc.Layer.extend(
             }
         }
 
-        if(top<=size.height)
+        while(top<size.height || right<size.width)
         {
-            var map = cc.TMXTiledMap.create("res/1.tmx");
-            map.setPosition( cc.p(0,top) );
-            this.maps.push(map);
-            this.layer.addChild(map);
-        }
-
-        if(right<=size.width)
-        {
-            var map = cc.TMXTiledMap.create("res/1.tmx");
-            map.setPosition( cc.p(right,0) );
-            this.maps.push(map);
-            this.layer.addChild(map);
-        }
-
-        /*
-       
-        do
-        {
-            var top = 0;
-            if(this.maps.length>0)
+            var map = null;
+            if(top<size.height)
             {
-                var map = this.maps[this.maps.length-1];
-                top = map.getPosition().y+map.getMapSize().height*map.getTileSize().height;
-            }
-
-            if (top<size.height)
-            {
-                var map = cc.TMXTiledMap.create("res/1.tmx");
+                map = cc.TMXTiledMap.create("res/2.tmx");
                 map.setPosition( cc.p(0,top) );
-                this.maps.push(map);
-                this.layer.addChild(map);
+
+                top+=map.getMapSize().height*map.getTileSize().height;;
+
+                var offset = map.getMapSize().width*map.getTileSize().width;
+                if(right<offset)
+                {
+                    right = offset;
+                }
             }
-            else
+            else if (right<size.width)
             {
-                break;
-            }
+                map = cc.TMXTiledMap.create("res/2.tmx");
+                map.setPosition( cc.p(right,0) );
+
+                right+=map.getMapSize().width*map.getTileSize().width;
+
+                var offset = map.getMapSize().height*map.getTileSize().height;
+                if(top<offset)
+                {
+                    top = offset;
+                }
+            };
+                      
+            this.maps.push(map);
+            this.layer.addChild(map);
+
+            
+            
         }
-        while(true);
-        */
+
     },
 
     recycleMap:function()
@@ -97,20 +93,13 @@ var MapLayer = cc.Layer.extend(
         {
             var map = this.maps[i];
             var top = map.getPosition().y+map.getMapSize().height*map.getTileSize().height;
-            if(top>=0)
-            {
-                continue;
-            }
-
             var right = map.getPosition().x+map.getMapSize().width*map.getTileSize().width;
-            if(right>=0)
+            if(top<0 || right<0)
             {
-                continue;
-            }
-
-            this.layer.removeChild(map);
-            this.maps.splice(i,1);
-            i--;        
+                this.layer.removeChild(map);
+                this.maps.splice(i,1);
+                i--;
+            }                
         }      
     },
 

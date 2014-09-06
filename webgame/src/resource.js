@@ -19,5 +19,6 @@ var g_resources = [
     //bgm
 
     //effect
-    "res/1.tmx"
+    "res/1.tmx",
+    "res/2.tmx"
 ];
