@@ -75,47 +75,56 @@ var GameLayer = cc.Layer.extend(
         for (var i = 0; i < maps.length; i++) 
         {
             var map = maps[i];
-            allLayers();
-            var layer = map.getLayer("object");
             var TileNumX = map.getMapSize().width;
             var TileNumY = map.getMapSize().height;
             var TileSizeW = map.getTileSize().width;
             var TileSizeH = map.getTileSize().height;
-
-            var a = layer.getTiles();
-            var b = layer.getTileset();
-
-            for (var j = 0; j < TileNumY; j++) 
+         
+            var group = map.getObjectGroup("Object Layer 1");
+            var array = group.getObjects();
+            var dict;
+            for (var i = 0, len = array.length; i < len; i++) 
             {
-                var y = map.y+j*TileSizeH;
-                if(y>WinSize.height)
-                {
-                    break;
-                }
+                dict = array[i];
+            }
 
-                if(y+TileSizeH<0)
+            var layers = map.allLayers();
+            for (var l=0; l<layers.length; l++)
+            {
+                var layer = layers[l];
+                
+                for (var j = 0; j < TileNumY; j++) 
                 {
-                    continue;
-                }
+                    var y = map.y+j*TileSizeH;
+                    if(y>WinSize.height)
+                    {
+                        break;
+                    }
 
-                for (var k = 0; k < TileNumX; k++) 
-                {
-                    var tileGID = layer.getTileGIDAt(cc.p(k, TileNumY-(j+1)));
-                    if(0==tileGID)
+                    if(y+TileSizeH<0)
                     {
                         continue;
                     }
 
-                    var x = map.x+k*TileSizeW;
-
-                    var rc1 = cc.rect(x,y,TileSizeW,TileSizeH);
-                    var rc2 = this.player.collideRect();
-                    if(utility.collide(rc1,rc2))
+                    for (var k = 0; k < TileNumX; k++) 
                     {
-                        this.unschedule(this.update);
-                        return;
+                        var tileGID = layer.getTileGIDAt(cc.p(k, TileNumY-(j+1)));
+                        if(0==tileGID)
+                        {
+                            continue;
+                        }
+
+                        var x = map.x+k*TileSizeW;
+
+                        var rc1 = cc.rect(x,y,TileSizeW,TileSizeH);
+                        var rc2 = this.player.collideRect();
+                        if(utility.collide(rc1,rc2))
+                        {
+                            this.unschedule(this.update);
+                            return;
+                        }
                     }
-                }
+                };
             };
         };
 

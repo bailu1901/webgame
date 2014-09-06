@@ -3,9 +3,36 @@
  <tileset firstgid="1" name="HelloWorld" tilewidth="32" tileheight="32">
   <image source="HelloWorld.png" width="800" height="450"/>
  </tileset>
- <layer name="object" width="10" height="10">
+ <tileset firstgid="351" name="CloseSelected" tilewidth="32" tileheight="32">
+  <image source="CloseSelected.png" width="40" height="40"/>
+ </tileset>
+ <imagelayer name="Image Layer 1" width="10" height="10">
+  <image source="HelloWorld.png"/>
+ </imagelayer>
+ <layer name="Tile Layer 1" width="10" height="10">
   <data encoding="base64" compression="zlib">
    eJzjYmQgCLiIUDMK8ANiwhCkBgAkRAAt
   </data>
  </layer>
+ <layer name="Tile Layer 2" width="10" height="10">
+  <data encoding="base64" compression="zlib">
+   eJxjYMAE8YxYBEcB1QG2cAYAl44AwQ==
+  </data>
+ </layer>
+ <objectgroup name="Object Layer 1" width="10" height="10">
+  <object type="3" x="96" y="32" width="32" height="32">
+   <properties>
+    <property name="a" value="1"/>
+   </properties>
+  </object>
+  <object type="2" x="160" y="96">
+   <polygon points="0,0 0,32 32,32"/>
+  </object>
+  <object type="1" x="128" y="160">
+   <polyline points="0,0 64,0 96,64 32,32 0,64 0,0"/>
+  </object>
+  <object type="2" x="32" y="96">
+   <polyline points="0,0 64,0 96,64 32,32 0,64 0,0"/>
+  </object>
+ </objectgroup>
 </map>
