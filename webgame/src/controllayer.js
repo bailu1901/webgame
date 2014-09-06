@@ -1,8 +1,6 @@
 var ControlLayer = cc.Layer.extend(
 {
-    process:true,
     gamelayer:null,
-    label:null,
     dir:Dir.None,
 
     ctor:function (gamelayer) {
@@ -48,8 +46,9 @@ var ControlLayer = cc.Layer.extend(
 
     onTouchMoved:function (touch, event) 
     {
-        var target = event.getCurrentTarget();
         /*
+        var target = event.getCurrentTarget();
+        
         if(!target.process)
         {
             return;
@@ -110,8 +109,6 @@ var ControlLayer = cc.Layer.extend(
     onTouchEnded:function (touch, event) 
     {
         var target = event.getCurrentTarget();
-        //target.process = true;
-        //target.dir = Dir.None;
         target.gamelayer.onControl(Dir.None);
     }
 });
