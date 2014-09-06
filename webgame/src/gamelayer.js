@@ -83,16 +83,18 @@ var GameLayer = cc.Layer.extend(
             var group = map.getObjectGroup("Object Layer 1");
             var array = group.getObjects();
             var dict;
-            for (var i = 0, len = array.length; i < len; i++) 
+            for (var d = 0, len = array.length; d < len; d++) 
             {
-                dict = array[i];
+                dict = array[d];
             }
 
             var layers = map.allLayers();
+
             for (var l=0; l<layers.length; l++)
             {
                 var layer = layers[l];
-                
+                var tileSize = layer.getTileset()._tileSize;
+
                 for (var j = 0; j < TileNumY; j++) 
                 {
                     var y = map.y+j*TileSizeH;
@@ -116,7 +118,7 @@ var GameLayer = cc.Layer.extend(
 
                         var x = map.x+k*TileSizeW;
 
-                        var rc1 = cc.rect(x,y,TileSizeW,TileSizeH);
+                        var rc1 = cc.rect(x,y,tileSize.width,tileSize.height);
                         var rc2 = this.player.collideRect();
                         if(utility.collide(rc1,rc2))
                         {
