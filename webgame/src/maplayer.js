@@ -16,12 +16,16 @@ var MapLayer = cc.Layer.extend(
 
     update:function(dt)
     {
+        /*
         for(var i=0; i<this.maps.length; i++)
         {
             var map=this.maps[i];
             map.x+=this.velocity.x*dt;
             map.y+=this.velocity.y*dt;
         }
+        */
+        this.x+=this.velocity.x*dt;
+        this.y+=this.velocity.y*dt;
         this.recycleMap();
         this.generateMap();  
     },
@@ -34,23 +38,25 @@ var MapLayer = cc.Layer.extend(
         for(var i=0; i<this.maps.length; i++)
         {
             var map = this.maps[i];
-            var y = map.getPosition().y+map.getMapSize().height*map.getTileSize().height;
+            
+            var y = map.y+map.getMapSize().height*map.getTileSize().height;
             if(y>top)
             {
                 top = y;
             }
 
-            var x = map.getPosition().x+map.getMapSize().width*map.getTileSize().width;
+            var x = map.x+map.getMapSize().width*map.getTileSize().width;
             if(x>right)
             {
                 right = x;
             }
         }
 
-        while(top<size.height || right<size.width)
+        var positionInWorld = this.convertToWorldSpace();
+        while(positionInWorld.y+top<size.height || positionInWorld.x+right<size.width)
         {
             var map = null;
-            if(top<size.height)
+            if(positionInWorld.y+top<size.height)
             {
                 map = cc.TMXTiledMap.create("res/1.tmx");
                 map.setPosition( cc.p(0,top) );
@@ -63,9 +69,9 @@ var MapLayer = cc.Layer.extend(
                     right = offset;
                 }
             }
-            else if (right<size.width)
+            else if (positionInWorld.x+right<size.width)
             {
-                map = cc.TMXTiledMap.create("res/2.tmx");
+                map = cc.TMXTiledMap.create("res/1.tmx");
                 map.setPosition( cc.p(right,0) );
 
                 right+=map.getMapSize().width*map.getTileSize().width;
@@ -92,8 +98,9 @@ var MapLayer = cc.Layer.extend(
         for(var i=0; i<this.maps.length; i++)
         {
             var map = this.maps[i];
-            var top = map.getPosition().y+map.getMapSize().height*map.getTileSize().height;
-            var right = map.getPosition().x+map.getMapSize().width*map.getTileSize().width;
+            var positionInWorld = map.convertToWorldSpace();
+            var top = positionInWorld.y+map.getMapSize().height*map.getTileSize().height;
+            var right = positionInWorld.x+map.getMapSize().width*map.getTileSize().width;
             if(top<0 || right<0)
             {
                 this.layer.removeChild(map);
@@ -105,6 +112,8 @@ var MapLayer = cc.Layer.extend(
 
     reset:function()
     {
+        this.x = 0;
+        this.y = 0;
         this.layer.removeAllChildren();
         this.maps.length=0;
     }
