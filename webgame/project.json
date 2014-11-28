@@ -2,8 +2,8 @@
     "project_type": "javascript",
 
     "debugMode" : 1,
-    "showFPS" : true,
-    "frameRate" : 60,
+    "showFPS" : false,
+    "frameRate" : 30,
     "id" : "gameCanvas",
     "renderMode" : 0,
     "engineDir":"frameworks/cocos2d-html5",
@@ -18,6 +18,6 @@
         "src/controllayer.js",
         "src/player.js",
         "src/maplayer.js",
-        "src/gamelayer.js"
+        "src/get_ten.js"
     ]
 }
