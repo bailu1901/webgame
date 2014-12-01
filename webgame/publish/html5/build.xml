@@ -253,14 +253,13 @@
 
             </sources>
             <sources dir="${basedir}">
-                <file name="src/gamedefine.js"/>
-                <file name="src/utility.js"/>
-                <file name="src/resource.js"/>
-                <file name="src/app.js"/>
-                <file name="src/controllayer.js"/>
-                <file name="src/player.js"/>
-                <file name="src/maplayer.js"/>
-                <file name="src/get_ten.js"/>
+                <file name="src/get_ten/gamedefine.js"/>
+                <file name="src/get_ten/utility.js"/>
+                <file name="src/get_ten/resource.js"/>
+                <file name="src/get_ten/gamelogic.js"/>
+                <file name="src/get_ten/tileboard.js"/>
+                <file name="src/get_ten/gameover_layer.js"/>
+                <file name="src/get_ten/game_layer.js"/>
                 <file name="main.js"/>
 
             </sources>
