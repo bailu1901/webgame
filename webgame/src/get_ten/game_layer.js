@@ -65,7 +65,7 @@ var GameLayer = cc.Layer.extend(
         this.addChild(menu);
 
         this.label = cc.LabelTTF.create();
-        this.label.setColor(cc.color(0,0,0))
+        this.label.setColor(cc.color(0,255,0))
         this.label.setFontSize(40);
         this.label.setPosition(size.width/2,size.height-this.label.getFontSize());
         this.label.setString("Score:"+g_GameLogic.score);
@@ -76,7 +76,8 @@ var GameLayer = cc.Layer.extend(
     {
         if (false==this.gameover) {
             if( g_GameLogic.checkover() ){
-                this.doGameOver();
+                this.gameover = true;
+                this.runAction(cc.sequence( cc.delayTime(1), cc.callFunc(this.doGameOver,this)));
             }
         };
     },
@@ -89,8 +90,7 @@ var GameLayer = cc.Layer.extend(
     },
 
     doGameOver:function()
-    {
-        this.gameover = true;
+    {    
         layer = new GameOverLayer();
         this.addChild(layer);
     },
