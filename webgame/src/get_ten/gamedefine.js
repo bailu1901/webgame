@@ -1,7 +1,7 @@
 var g_Window =
 {
     Width : 480,
-    Height : 800
+    Height : 750
 };
 
 var Dir = 
@@ -18,7 +18,7 @@ var Dir =
 var NUMBER_COLUMN = 5;
 var NUMBER_ROW = 5;
 
-var TILE_WIDTH = g_Window.Width/5;
+var TILE_WIDTH = 60;//g_Window.Width/5;
 var TILE_HEIGHT =TILE_WIDTH ;
 
 var ColArray = new Array();

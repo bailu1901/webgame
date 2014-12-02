@@ -5,13 +5,15 @@ var GameOverLayer = cc.Layer.extend(
         // 1. super init first
         this._super();
 
+        var VisbleSize = cc.director.getVisibleSize();
+        
         layer = cc.LayerColor.create(cc.color(0, 0, 0,128));
         this.addChild(layer);
         label = cc.LabelTTF.create();
         label.setFontSize(60);
         label.setString("Shiiiiit!");
         label.setColor(cc.color(255,0,0));
-        label.setPosition(WinSize.width/2,WinSize.height/2);
+        label.setPosition(VisbleSize.width/2,VisbleSize.height/2);
         layer.addChild(label);
         var act = cc.sequence(cc.scaleTo(0.6,1.3),cc.scaleTo(0.6,1.0)).repeatForever();
         label.runAction(act)
@@ -20,7 +22,7 @@ var GameOverLayer = cc.Layer.extend(
         label1.setFontSize(30);
         label1.setString("Your Score is:"+g_GameLogic.score);
         label1.setColor(cc.color(0,255,0));
-        label1.setPosition(WinSize.width/2,WinSize.height/2-100);
+        label1.setPosition(VisbleSize.width/2,VisbleSize.height/2-100);
         layer.addChild(label1);
 
         cc.eventManager.addListener({
