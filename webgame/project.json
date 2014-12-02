@@ -15,7 +15,7 @@
         "src/get_ten/utility.js",
         "src/get_ten/resource.js",
         "src/get_ten/gamelogic.js",
-        "src/get_ten/tileboard.js",
+        "src/get_ten/tile_layer.js",
         "src/get_ten/gameover_layer.js",
         "src/get_ten/game_layer.js"
     ]
