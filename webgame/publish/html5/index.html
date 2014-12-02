@@ -20,7 +20,50 @@
     </style>
 </head>
 <body style="padding:0; margin: 0; background: #111;">
-<canvas id="gameCanvas" width="480" height="800"></canvas>
+<canvas id="gameCanvas" width="480" height="750"></canvas>
+<script type="text/javascript" src="WeixinApi.js"></script>
+<script>
+/*
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?91f4361e83cf34ffe3b6dd0471ee205a";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+    */
+    window.wxData = {
+        "appId": "", // 服务号可以填写appId
+        "imgUrl":'http://182.254.129.251:3002/res/CloseSelected.png',
+        "link":'http://182.254.129.251:3002/index.html',
+        "desc":"牛逼牛逼真牛逼_desc",
+        "title":"牛逼牛逼真牛逼_title"
+    };
+    window.wxFriend = {
+        "appId": "", // 服务号可以填写appId
+        "imgUrl":'http://182.254.129.251:3002/res/favicon.ico',
+        "link":'http://182.254.129.251:3002/index.html',
+        "desc":'牛逼牛逼真牛逼_desc',
+        "title":"牛逼牛逼真牛逼_title"
+    };
+    WeixinApi.ready(function(Api) {
+        var wxCallbacks = {
+            ready : function() {
+            },
+            cancel : function(resp) {
+            },
+            fail : function(resp) {
+            },
+            confirm : function(resp) {
+            },
+            all : function(resp) {
+            }
+        };
+        Api.shareToFriend(wxFriend, wxCallbacks);
+        Api.shareToTimeline(wxData, wxCallbacks);
+        Api.shareToWeibo(wxData, wxCallbacks);
+    });
+</script>
 
 <script src="game.min.js"></script>
 </body>

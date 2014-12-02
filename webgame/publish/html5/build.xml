@@ -257,7 +257,7 @@
                 <file name="src/get_ten/utility.js"/>
                 <file name="src/get_ten/resource.js"/>
                 <file name="src/get_ten/gamelogic.js"/>
-                <file name="src/get_ten/tileboard.js"/>
+                <file name="src/get_ten/tile_layer.js"/>
                 <file name="src/get_ten/gameover_layer.js"/>
                 <file name="src/get_ten/game_layer.js"/>
                 <file name="main.js"/>
