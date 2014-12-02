@@ -3,7 +3,7 @@ var PIX_OFFSET_PUSHDOWN=10;
 var Tile = cc.Node.extend({
     layer:null,
     label:null,
-    bPushDown:false,
+    bPushDown:true,
 
     ctor:function () {
         this._super();
@@ -112,7 +112,7 @@ var TileLayer = cc.Node.extend(
             if (cc.rectContainsPoint(r, local)) {
                 var array = new Array();
                 g_GameLogic.check(i,Dir.None,array);
-                target.pushDown(array);
+                target.popUp(array);
                 return true;
             }
                         
@@ -133,7 +133,7 @@ var TileLayer = cc.Node.extend(
             if (cc.rectContainsPoint(r, local)) {
                 var array = new Array();
                 g_GameLogic.check(i,Dir.None,array);
-                target.pushDown(array);
+                target.popUp(array);
                 break;
             }                        
         }
@@ -144,7 +144,7 @@ var TileLayer = cc.Node.extend(
         var touchLocation = touch.getLocation();
         var local = target.convertToNodeSpace(touchLocation);
 
-        target.popUpAll();
+        target.pushDownAll();
 
         for (var i = 0; i <NUMBER_ROW*NUMBER_COLUMN; i++) { 
             var tile = target.itemArray[i];
@@ -165,24 +165,24 @@ var TileLayer = cc.Node.extend(
         for (var i = 0; i <NUMBER_ROW*NUMBER_COLUMN; i++) {              
             var tile = this.itemArray[i];
             tile.setNum(g_GameLogic.data[i]);
+        }
+        this.pushDownAll();
+    },
+
+    popUp:function(array)
+    {
+        this.pushDownAll();
+        for (var i = 0; i <array.length; i++) {              
+            var tile = this.itemArray[array[i]];
             tile.popUp();
         }
     },
 
-    pushDown:function(array)
-    {
-        this.popUpAll();
-        for (var i = 0; i <array.length; i++) {              
-            var tile = this.itemArray[array[i]];
-            tile.pushDown();
-        }
-    },
-
-    popUpAll:function()
+    pushDownAll:function()
     {
         for (var i = 0; i <NUMBER_ROW*NUMBER_COLUMN; i++) {              
             var tile = this.itemArray[i];
-            tile.popUp();
+            tile.pushDown();
         }
     },
 

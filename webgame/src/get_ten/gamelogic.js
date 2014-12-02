@@ -135,7 +135,7 @@ var GameLogic = cc.Class.extend(
                 
             }
         }
-        nMax =9;
+        //nMax =9;
         return Math.ceil(nMax*Math.random());
     },
 
